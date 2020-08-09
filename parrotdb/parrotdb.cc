@@ -16,7 +16,7 @@ ParrotDB::ParrotDB(const ClusterOptions& cluster, const StoreOptions& store) {
     store_ = std::make_shared<InMemoryStore>();
   }
 
-  // TODO(AD) Start anti-entropy background
+  // TODO(AD) Start anti-entropy background (gossip?)
 }
 
 std::optional<std::vector<uint8_t>> ParrotDB::Get(
@@ -26,8 +26,8 @@ std::optional<std::vector<uint8_t>> ParrotDB::Get(
 
 std::optional<std::vector<uint8_t>> ParrotDB::Get(
     const std::vector<uint8_t>& key, const ReadOptions& options) {
-  // TODO(AD) Request from N replicas (including locally) (N in options)
-  // TODO(AD) Handle read repair (this can be in cluster)
+  // TODO(AD) Handle quorum and read-repair (request all replicas and take
+  // latest from N responses and repair stale)
   return store_->Get(key);
 }
 
@@ -39,10 +39,9 @@ void ParrotDB::Put(const std::vector<uint8_t>& key,
 void ParrotDB::Put(const std::vector<uint8_t>& key,
                    const std::vector<uint8_t>& value,
                    const WriteOptions& options) {
-  // TODO(AD) Write to local storage
-  // TODO(AD) Replicate to the cluster - either sync or async based on options
-  // TODO(AD) If sync and cannot replicate roll back?
   store_->Put(key, value);
+  // TODO(AD) Handle quorum. Just async for now. Need to roll back if < N
+  // available?
 }
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key) {
@@ -51,10 +50,9 @@ void ParrotDB::Delete(const std::vector<uint8_t>& key) {
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key,
                       const WriteOptions& options) {
-  // TODO(AD) Write to local storage
-  // TODO(AD) Replicate to the cluster - either sync or async based on options
-  // TODO(AD) If sync and cannot replicate roll back?
   store_->Delete(key);
+  // TODO(AD) Handle quorum. Just async for now. Need to roll back if < N
+  // available?
 }
 
 }  // namespace parrotdb
