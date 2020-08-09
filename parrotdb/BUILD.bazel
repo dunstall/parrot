@@ -1,0 +1,28 @@
+cc_library(
+    name = "parrotdb",
+    srcs = glob(
+        ["*.cc"],
+        exclude = ["*_test.cc"],
+    ),
+    hdrs = glob(["*.h"]),
+    copts = [
+        "-Iinclude",
+    ],
+    visibility = ["//visibility:private"],
+    deps = [
+        "//include:interface",
+    ],
+)
+
+cc_test(
+    name = "parrotdb-test",
+    srcs = glob(["*_test.cc"]),
+    copts = [
+        "-Iexternal/gtest/include",
+    ],
+    deps = [
+        ":parrotdb",
+        "//include:interface",
+        "@gtest//:gtest_main",
+    ],
+)
