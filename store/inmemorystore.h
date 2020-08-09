@@ -8,22 +8,22 @@
 #include <unordered_map>
 #include <vector>
 
-#include "db/db.h"
+#include "store/store.h"
 
 namespace parrotdb {
 
-class InMemoryDB : public DB {
+class InMemoryStore : public Store {
  public:
-  InMemoryDB() {}
+  InMemoryStore() {}
 
-  ~InMemoryDB() override {}
+  ~InMemoryStore() override {}
 
   // Not copy-assignable as owns a mutex.
-  InMemoryDB(const InMemoryDB&) = delete;
-  InMemoryDB& operator=(const InMemoryDB&) = delete;
+  InMemoryStore(const InMemoryStore&) = delete;
+  InMemoryStore& operator=(const InMemoryStore&) = delete;
 
-  InMemoryDB(InMemoryDB&&) = default;
-  InMemoryDB& operator=(InMemoryDB&&) = default;
+  InMemoryStore(InMemoryStore&&) = default;
+  InMemoryStore& operator=(InMemoryStore&&) = default;
 
   std::optional<std::vector<uint8_t>> Get(
       const std::vector<uint8_t>& key) override;

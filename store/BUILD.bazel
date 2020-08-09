@@ -1,21 +1,21 @@
 cc_library(
-    name = "db",
+    name = "store",
     srcs = glob(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["*.h"]),  # TODO(AD) Limit public
-    visibility = ["//visibility:public"],
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:private"],
 )
 
 cc_test(
-    name = "db-test",
+    name = "store-test",
     srcs = glob(["*_test.cc"]),
     copts = [
         "-Iexternal/gtest/include",
     ],
     deps = [
-        ":db",
+        ":store",
         "@gtest//:gtest_main",
     ],
 )

@@ -1,6 +1,6 @@
 // Copyright 2020 Andrew Dunstall
 
-#include "db/inmemorydb.h"
+#include "store/inmemorystore.h"
 
 #include <mutex>
 #include <optional>
@@ -8,7 +8,7 @@
 
 namespace parrotdb {
 
-std::optional<std::vector<uint8_t>> InMemoryDB::Get(
+std::optional<std::vector<uint8_t>> InMemoryStore::Get(
     const std::vector<uint8_t>& key) {
   const std::string s(key.begin(), key.end());
   std::lock_guard<std::mutex> lk(mut_);
@@ -18,14 +18,14 @@ std::optional<std::vector<uint8_t>> InMemoryDB::Get(
   return std::nullopt;
 }
 
-void InMemoryDB::Put(const std::vector<uint8_t>& key,
-                     const std::vector<uint8_t>& value) {
+void InMemoryStore::Put(const std::vector<uint8_t>& key,
+                        const std::vector<uint8_t>& value) {
   const std::string s(key.begin(), key.end());
   std::lock_guard<std::mutex> lk(mut_);
   entries_[s] = value;
 }
 
-void InMemoryDB::Delete(const std::vector<uint8_t>& key) {
+void InMemoryStore::Delete(const std::vector<uint8_t>& key) {
   const std::string s(key.begin(), key.end());
   std::lock_guard<std::mutex> lk(mut_);
   entries_.erase(s);

@@ -8,9 +8,10 @@
 
 namespace parrotdb {
 
-class DB {
+// Facade for the underlying database storage engine.
+class Store {
  public:
-  virtual ~DB() {}
+  virtual ~Store() {}
 
   virtual std::optional<std::vector<uint8_t>> Get(
       const std::vector<uint8_t>& key) = 0;
