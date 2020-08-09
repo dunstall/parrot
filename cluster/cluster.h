@@ -3,7 +3,6 @@
 #pragma once
 
 #include <vector>
-#include "parrotdb/options.h"
 
 namespace parrotdb {
 
@@ -13,20 +12,18 @@ namespace parrotdb {
 
 class Cluster {
  public:
-  Cluster(const ClusterOptions& options) {}
+  ~Cluster() {}
 
   // TODO(AD) Handle quorum and read-repair (request all replicas and take
   // latest from N responses and repair stale)
 
-  std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key,
-                                          const ReadOptions& options) {
-    return std::nullopt;
-  }
+  virtual std::optional<std::vector<uint8_t>> Get(
+      const std::vector<uint8_t>& key) = 0;
 
-  void Put(const std::vector<uint8_t>& key, const std::vector<uint8_t>& value,
-           const WriteOptions& options) {}
+  virtual void Put(const std::vector<uint8_t>& key,
+                   const std::vector<uint8_t>& value) = 0;
 
-  void Delete(const std::vector<uint8_t>& key, const WriteOptions& options) {}
+  virtual void Delete(const std::vector<uint8_t>& key) = 0;
 };
 
 }  // namespace parrotdb

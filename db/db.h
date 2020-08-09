@@ -25,17 +25,9 @@ class DB {
 
   std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key);
 
-  std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key,
-                                          const ReadOptions& options);
-
   void Put(const std::vector<uint8_t>& key, const std::vector<uint8_t>& value);
 
-  void Put(const std::vector<uint8_t>& key, const std::vector<uint8_t>& value,
-           const WriteOptions& options);
-
   void Delete(const std::vector<uint8_t>& key);
-
-  void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
 
  private:
   std::unique_ptr<Cluster> cluster_;

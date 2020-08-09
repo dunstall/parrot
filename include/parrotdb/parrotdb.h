@@ -3,19 +3,17 @@
 #pragma once
 
 #include <cstdint>
-#include <memory>
 #include <optional>
 #include <vector>
 
 #include "db/db.h"
-#include "parrotdb/options.h"
 #include "store/store.h"
 
 namespace parrotdb {
 
 class ParrotDB {
  public:
-  explicit ParrotDB(const ClusterOptions& cluster, const StoreOptions& store);
+  ParrotDB();
 
   ~ParrotDB() {}
 
@@ -28,17 +26,9 @@ class ParrotDB {
 
   std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key);
 
-  std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key,
-                                          const ReadOptions& options);
-
   void Put(const std::vector<uint8_t>& key, const std::vector<uint8_t>& value);
 
-  void Put(const std::vector<uint8_t>& key, const std::vector<uint8_t>& value,
-           const WriteOptions& options);
-
   void Delete(const std::vector<uint8_t>& key);
-
-  void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
 
  private:
   DB db_;

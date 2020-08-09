@@ -24,8 +24,8 @@ $(OBJ_DIR)/%.o: %.cc
 	$(CXX) $(CPPFLAGS) $(INC_FLAGS) -c -o $@ $<
 
 GTEST := third-party/googletest
-TEST_INC_FLAGS := -I$(GTEST)/googletest/include
-TEST_LD_FLAGS := -L$(GTEST)/build/lib -lgtest -lgtest_main -lpthread
+TEST_INC_FLAGS := -I$(GTEST)/googlemock/include -I$(GTEST)/googletest/include
+TEST_LD_FLAGS := -L$(GTEST)/build/lib -lgtest -lgmock -lgtest_main -lpthread
 
 .PHONY: check
 check: all $(OBJ_TEST)
@@ -38,14 +38,13 @@ $(OBJ_DIR)/test/%.o: %.cc
 
 .PHONY: format
 format:
-	find . -name "*.h" | xargs clang-format -i --style=Google
-	find . -name "*.cc" | xargs clang-format -i --style=Google
+	find . \( -name "*.cc" -o -name "*.h" \) -not -path "./third-party/*"  | xargs clang-format -i --style=Google
 
 .PHONY: analyze
 analyze:
 	# Requires cpplint (pip3 install cpplint)
 	# TODO(AD) use clang-tidy
-	cpplint --recursive --exclude=lib/ --filter=-build/c++11,-whitespace/parens,-whitespace/line_length,-whitespace/braces .
+	cpplint --recursive --exclude=third-party/ --filter=-build/c++11,-whitespace/parens,-whitespace/line_length,-whitespace/braces .
 
 .PHONY: clean
 clean:
