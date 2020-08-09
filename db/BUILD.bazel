@@ -1,10 +1,27 @@
 cc_library(
     name = "db",
-    srcs = glob(["*.cc"]),
+    srcs = glob(
+        ["*.cc"],
+        exclude = ["*_test.cc"],
+    ),
     hdrs = glob(["db/*.h"]),
     copts = ["-Iinclude"],
     visibility = ["//visibility:public"],
     deps = [
         "//include:interface",
+    ],
+)
+
+cc_test(
+    name = "db-test",
+    srcs = glob(["*_test.cc"]),
+    copts = [
+        "-Iexternal/gtest/include",
+        "-Iinclude",
+    ],
+    deps = [
+        ":db",
+        "//include:interface",
+        "@gtest//:gtest_main",
     ],
 )
