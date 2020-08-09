@@ -4,10 +4,11 @@
 
 namespace parrotdb {
 
-struct ClusterOptions {};
+struct ClusterOptions {
+};
 
 struct StoreOptions {
-  StoreOptions(bool _dev = false) : dev{_dev} {}
+  explicit StoreOptions(bool _dev = false) : dev{_dev} {}
 
   bool dev = false;
 };

@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "parrotdb/options.h"
+#include "store/store.h"
 
 namespace parrotdb {
 
@@ -39,7 +40,7 @@ class ParrotDB {
   void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
 
  private:
-  // std::shared_ptr<Store> store_;
+  std::shared_ptr<Store> store_;
 };
 
 }  // namespace parrotdb

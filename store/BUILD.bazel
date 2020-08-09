@@ -4,8 +4,8 @@ cc_library(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["*.h"]),
-    visibility = ["//visibility:private"],
+    hdrs = glob(["*.h"]),  # TODO(AD) Hide interfaces
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
