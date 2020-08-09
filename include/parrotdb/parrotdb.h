@@ -7,7 +7,7 @@
 #include <optional>
 #include <vector>
 
-#include "cluster/cluster.h"
+#include "db/db.h"
 #include "parrotdb/options.h"
 #include "store/store.h"
 
@@ -41,9 +41,7 @@ class ParrotDB {
   void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
 
  private:
-  Cluster cluster_;
-
-  std::shared_ptr<Store> store_;
+  DB db_;
 };
 
 }  // namespace parrotdb
