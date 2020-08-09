@@ -8,23 +8,20 @@
 #include <vector>
 
 #include "cluster/cluster.h"
-#include "parrotdb/options.h"
 #include "store/store.h"
 
 namespace parrotdb {
 
-class ParrotDB {
+class DB {
  public:
-  explicit ParrotDB(const ClusterOptions& cluster, const StoreOptions& store);
-
-  ~ParrotDB() {}
+  DB(std::unique_ptr<Cluster> cluster, std::unique_ptr<Store> store);
 
   // Not copy-assignable.
-  ParrotDB(const ParrotDB&) = delete;
-  ParrotDB& operator=(const ParrotDB&) = delete;
+  DB(const DB&) = delete;
+  DB& operator=(const DB&) = delete;
 
-  ParrotDB(ParrotDB&&) = default;
-  ParrotDB& operator=(ParrotDB&&) = default;
+  DB(DB&&) = default;
+  DB& operator=(DB&&) = default;
 
   std::optional<std::vector<uint8_t>> Get(const std::vector<uint8_t>& key);
 
@@ -41,9 +38,9 @@ class ParrotDB {
   void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
 
  private:
-  Cluster cluster_;
+  std::unique_ptr<Cluster> cluster_;
 
-  std::shared_ptr<Store> store_;
+  std::unique_ptr<Store> store_;
 };
 
 }  // namespace parrotdb

@@ -1,6 +1,5 @@
 cc_library(
-    name = "interface",
-    srcs = glob(["*.cc"]),
+    name = "include",
     hdrs = glob(["parrotdb/*.h"]),
     visibility = ["//visibility:public"],
 )
