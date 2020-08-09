@@ -19,6 +19,7 @@ cc_test(
     srcs = glob(["*_test.cc"]),
     copts = [
         "-Iexternal/gtest/include",
+        "-Iinclude",
     ],
     deps = [
         ":parrotdb",

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <vector>
 
@@ -12,7 +13,7 @@ namespace parrotdb {
 
 class ParrotDB {
  public:
-  explicit ParrotDB(const ClusterOptions& options);
+  explicit ParrotDB(const ClusterOptions& cluster, const StoreOptions& store);
 
   ~ParrotDB() {}
 
@@ -36,6 +37,9 @@ class ParrotDB {
   void Delete(const std::vector<uint8_t>& key);
 
   void Delete(const std::vector<uint8_t>& key, const WriteOptions& options);
+
+ private:
+  // std::shared_ptr<Store> store_;
 };
 
 }  // namespace parrotdb
