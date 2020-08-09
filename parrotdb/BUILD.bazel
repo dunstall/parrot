@@ -10,22 +10,9 @@ cc_library(
     ],
     visibility = ["//visibility:private"],
     deps = [
-        "//include:interface",
+        "//cluster",
+        "//db",
+        "//include",
         "//store",
-    ],
-)
-
-cc_test(
-    name = "parrotdb-test",
-    srcs = glob(["*_test.cc"]),
-    copts = [
-        "-Iexternal/gtest/include",
-        "-Iinclude",
-    ],
-    deps = [
-        ":parrotdb",
-        "//include:interface",
-        "//store",
-        "@gtest//:gtest_main",
     ],
 )

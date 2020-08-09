@@ -6,14 +6,20 @@
 #include <optional>
 #include <vector>
 
+#include "cluster/cluster.h"
 #include "store/inmemorystore.h"
 
 namespace parrotdb {
 
-ParrotDB::ParrotDB(const ClusterOptions& cluster, const StoreOptions& store) {
+// TODO(AD) Make as thin an possible. Just create cluster and store, then
+// pass to DB.
+
+ParrotDB::ParrotDB(const ClusterOptions& cluster, const StoreOptions& store)
+    : db_{nullptr, nullptr} {
+  // TODO(AD) Handle non-dev (use RocksDB)
   if (store.dev) {
-    // TODO(AD) Handle non-dev (use RocksDB)
-    store_ = std::make_shared<InMemoryStore>();
+    db_ = DB{std::make_unique<Cluster>(cluster),
+             std::make_unique<InMemoryStore>()};
   }
 
   // TODO(AD) Start anti-entropy background (gossip?)
@@ -26,9 +32,7 @@ std::optional<std::vector<uint8_t>> ParrotDB::Get(
 
 std::optional<std::vector<uint8_t>> ParrotDB::Get(
     const std::vector<uint8_t>& key, const ReadOptions& options) {
-  // TODO(AD) Handle quorum and read-repair (request all replicas and take
-  // latest from N responses and repair stale)
-  return store_->Get(key);
+  return db_.Get(key, options);
 }
 
 void ParrotDB::Put(const std::vector<uint8_t>& key,
@@ -39,9 +43,7 @@ void ParrotDB::Put(const std::vector<uint8_t>& key,
 void ParrotDB::Put(const std::vector<uint8_t>& key,
                    const std::vector<uint8_t>& value,
                    const WriteOptions& options) {
-  store_->Put(key, value);
-  // TODO(AD) Handle quorum. Just async for now. Need to roll back if < N
-  // available?
+  db_.Put(key, value, options);
 }
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key) {
@@ -50,9 +52,7 @@ void ParrotDB::Delete(const std::vector<uint8_t>& key) {
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key,
                       const WriteOptions& options) {
-  store_->Delete(key);
-  // TODO(AD) Handle quorum. Just async for now. Need to roll back if < N
-  // available?
+  db_.Delete(key, options);
 }
 
 }  // namespace parrotdb
