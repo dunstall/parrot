@@ -10,5 +10,6 @@ Possible techniques:
   * bitmap version vector
 * Quorum
 * Witness replicas
+* Conflict resolution (LWW or Vector Clocks) - make configurable
 
 Provide a C++ library not an API.

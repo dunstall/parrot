@@ -15,6 +15,7 @@ TEST := $(wildcard */*_test.cc)
 OBJ := $(patsubst %.cc,$(OBJ_DIR)/%.o,$(SRC))
 OBJ_TEST := $(patsubst %.cc,$(OBJ_DIR)/test/%.o,$(TEST))
 
+# TODO(AD) Rebuilt when headers change
 .PHONY: all
 all: $(OBJ)
 	ar -rv parrotdb.a $(OBJ)
