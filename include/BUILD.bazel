@@ -1,5 +1,0 @@
-cc_library(
-    name = "include",
-    hdrs = glob(["parrotdb/*.h"]),
-    visibility = ["//visibility:public"],
-)
