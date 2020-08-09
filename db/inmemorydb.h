@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "parrotdb/db.h"
+#include "db/db.h"
 
 namespace parrotdb {
 

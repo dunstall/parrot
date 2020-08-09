@@ -4,12 +4,8 @@ cc_library(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["db/*.h"]),
-    copts = ["-Iinclude"],
+    hdrs = glob(["*.h"]),  # TODO(AD) Limit public
     visibility = ["//visibility:public"],
-    deps = [
-        "//include:interface",
-    ],
 )
 
 cc_test(
@@ -17,11 +13,9 @@ cc_test(
     srcs = glob(["*_test.cc"]),
     copts = [
         "-Iexternal/gtest/include",
-        "-Iinclude",
     ],
     deps = [
         ":db",
-        "//include:interface",
         "@gtest//:gtest_main",
     ],
 )
