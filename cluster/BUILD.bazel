@@ -1,0 +1,25 @@
+cc_library(
+    name = "cluster",
+    srcs = glob(
+        ["*.cc"],
+        exclude = ["*_test.cc"],
+    ),
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//include",
+    ],
+)
+
+cc_test(
+    name = "cluster-test",
+    srcs = glob(["*_test.cc"]),
+    copts = [
+        "-Iexternal/gtest/include",
+    ],
+    deps = [
+        ":cluster",
+        "//include",
+        "@gtest//:gtest_main",
+    ],
+)
