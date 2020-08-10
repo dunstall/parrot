@@ -49,4 +49,4 @@ analyze:
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) gtest.out
