@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+
+service Cluster {
+  rpc Put (PutRequest) returns (PutResponse);
+}
+
+message PutRequest {
+  uint32 x = 1;
+}
+
+message PutResponse {
+  uint32 x = 1;
+}

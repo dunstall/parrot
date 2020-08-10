@@ -27,5 +27,24 @@ http_archive(
     url = "https://github.com/google/googletest/archive/release-1.10.0.zip",
 )
 
-# # TODO(AD) Add clang-tidy and cpplint to bazel
-# # TODO(AD) Do bazel properly
+# GRPC.
+
+http_archive(
+    name = "com_github_grpc_grpc",
+    sha256 = "c35d405f9979f78b4d3cc6ddb2f3b85f59a616c974c1f86ee56fa57ed3e6800a",
+    strip_prefix = "grpc-56ad644c329d90c0742a02462b2bd365ff759158",
+    urls = [
+        "https://github.com/grpc/grpc/archive/56ad644c329d90c0742a02462b2bd365ff759158.tar.gz",
+    ],
+)
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
+
+# TODO(AD) Add clang-tidy and cpplint to bazel
+# TODO(AD) Do bazel properly
