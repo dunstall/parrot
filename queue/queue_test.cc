@@ -5,7 +5,7 @@
 #include <thread>
 
 #include "gtest/gtest.h"
-#include "queue.h"
+#include "queue/queue.h"
 
 namespace wombat::broker::util {
 
