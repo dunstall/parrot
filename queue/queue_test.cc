@@ -7,7 +7,7 @@
 #include "gtest/gtest.h"
 #include "queue/queue.h"
 
-namespace wombat::broker::util {
+namespace parrotdb {
 
 using namespace std::chrono_literals;  // NOLINT
 
@@ -72,4 +72,4 @@ TEST_F(QueueTest, TryPopEmpty) {
   EXPECT_FALSE(queue.TryPop());
 }
 
-}  // namespace wombat::broker::util
+}  // namespace parrotdb

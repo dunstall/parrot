@@ -8,7 +8,7 @@
 #include <queue>
 #include <utility>
 
-namespace wombat::broker::util {
+namespace parrotdb {
 
 template <class T>
 class Queue {
@@ -70,4 +70,4 @@ class Queue {
   std::mutex mut_;
 };
 
-}  // namespace wombat::broker::util
+}  // namespace parrotdb
