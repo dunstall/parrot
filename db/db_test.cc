@@ -14,8 +14,6 @@ namespace parrotdb {
 
 class MockCluster : public Cluster {
  public:
-  MOCK_METHOD(std::optional<std::vector<uint8_t>>, Get,
-              (const std::vector<uint8_t>& key), (override));
   MOCK_METHOD(void, Put,
               (const std::vector<uint8_t>& key,
                const std::vector<uint8_t>& value),
