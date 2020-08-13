@@ -3,9 +3,12 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 
+#include "cluster/clusterservice.h"
 #include "db/db.h"
 #include "store/store.h"
 
@@ -13,7 +16,7 @@ namespace parrotdb {
 
 class ParrotDB {
  public:
-  ParrotDB();
+  ParrotDB(const std::string& addr, const std::vector<std::string>& cluster);
 
   ~ParrotDB() {}
 
@@ -32,6 +35,7 @@ class ParrotDB {
 
  private:
   DB db_;
+  std::unique_ptr<ClusterService> service_;
 };
 
 }  // namespace parrotdb

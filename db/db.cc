@@ -11,7 +11,7 @@
 
 namespace parrotdb {
 
-DB::DB(std::unique_ptr<Cluster> cluster, std::unique_ptr<Store> store)
+DB::DB(std::unique_ptr<Cluster> cluster, std::shared_ptr<Store> store)
     : cluster_{std::move(cluster)}, store_{std::move(store)} {}
 
 std::optional<std::vector<uint8_t>> DB::Get(const std::vector<uint8_t>& key) {

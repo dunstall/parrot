@@ -1,0 +1,12 @@
+cc_test(
+    name = "cluster-test",
+    srcs = glob(["*_test.cc"]),
+    copts = [
+        "-Iinclude",
+        "-Iexternal/gtest/include",
+    ],
+    deps = [
+        "//parrotdb",
+        "@gtest//:gtest_main",
+    ],
+)

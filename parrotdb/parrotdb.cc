@@ -8,25 +8,33 @@
 
 #include "cluster/cluster.h"
 #include "cluster/clusterimpl.h"
+#include "cluster/grpcnode.h"
 #include "cluster/node.h"
 #include "store/inmemorystore.h"
 
 namespace parrotdb {
 
-ParrotDB::ParrotDB() : db_{nullptr, nullptr} {
+ParrotDB::ParrotDB(const std::string& addr,
+                   const std::vector<std::string>& cluster)
+    : db_{nullptr, nullptr} {
   std::vector<std::shared_ptr<Node>> nodes{};
-  db_ = DB{std::make_unique<ClusterImpl>(std::move(nodes)),
-           std::make_unique<InMemoryStore>()};
+  for (const std::string& a : cluster) {
+    nodes.push_back(std::make_shared<GrpcNode>(a));
+  }
+  std::shared_ptr<Store> store = std::make_shared<InMemoryStore>();
+  db_ = DB{std::make_unique<ClusterImpl>(std::move(nodes)), store};
+  service_ = std::make_unique<ClusterService>(store, addr);
+  service_->Start();
 }
 
 std::optional<std::vector<uint8_t>> ParrotDB::Get(
     const std::vector<uint8_t>& key) {
-  return Get(key);
+  return db_.Get(key);
 }
 
 void ParrotDB::Put(const std::vector<uint8_t>& key,
                    const std::vector<uint8_t>& value) {
-  return Put(key, value);
+  return db_.Put(key, value);
 }
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key) { return Delete(key); }

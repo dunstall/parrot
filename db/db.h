@@ -14,7 +14,7 @@ namespace parrotdb {
 
 class DB {
  public:
-  DB(std::unique_ptr<Cluster> cluster, std::unique_ptr<Store> store);
+  DB(std::unique_ptr<Cluster> cluster, std::shared_ptr<Store> store);
 
   // Not copy-assignable.
   DB(const DB&) = delete;
@@ -32,7 +32,7 @@ class DB {
  private:
   std::unique_ptr<Cluster> cluster_;
 
-  std::unique_ptr<Store> store_;
+  std::shared_ptr<Store> store_;
 };
 
 }  // namespace parrotdb
