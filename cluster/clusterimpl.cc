@@ -7,11 +7,10 @@
 
 namespace parrotdb {
 
-ClusterImpl::ClusterImpl(const std::vector<std::string>& nodes)
-    : nodes_{} {
-  for (const auto& addr : nodes) {
-    nodes_.push_back(Node(addr));
-  }
+ClusterImpl::ClusterImpl(const std::vector<std::string>& nodes) : nodes_{} {
+  // for (const auto& addr : nodes) {
+  // nodes_.push_back(Node(addr));
+  // }
 }
 
 void ClusterImpl::Put(const std::vector<uint8_t>& key,

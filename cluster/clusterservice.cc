@@ -16,15 +16,16 @@ namespace parrotdb {
 ClusterService::ClusterService(std::shared_ptr<Store> store,
                                const std::string& addr)
     : pb::Cluster::Service{}, store_{store}, addr_{addr} {
-  grpc::ServerBuilder builder;
-  builder.AddListeningPort(addr_, grpc::InsecureServerCredentials());
-  builder.RegisterService(this);
-  server_ = std::unique_ptr<grpc::Server>(builder.BuildAndStart());
+  // grpc::ServerBuilder builder;
+  // builder.AddListeningPort(addr_, grpc::InsecureServerCredentials());
+  // builder.RegisterService(this);
+  // server_ = std::unique_ptr<grpc::Server>(builder.BuildAndStart());
 }
 
 ClusterService::~ClusterService() { Stop(); }
 
 void ClusterService::Start() {
+  CreateServer();
   thread_ = std::thread(&ClusterService::Run, this);
 }
 
@@ -44,6 +45,7 @@ grpc::Status ClusterService::Put(grpc::ServerContext* context,
   const std::vector<uint8_t> key(request->key().begin(), request->key().end());
   const std::vector<uint8_t> val(request->value().begin(),
                                  request->value().end());
+  // TODO handle err
   store_->Put(key, val);
   return grpc::Status::OK;
 }
@@ -54,6 +56,13 @@ grpc::Status ClusterService::Delete(grpc::ServerContext* context,
   const std::vector<uint8_t> key(request->key().begin(), request->key().end());
   store_->Delete(key);
   return grpc::Status::OK;
+}
+
+void ClusterService::CreateServer() {
+  grpc::ServerBuilder builder;
+  builder.AddListeningPort(addr_, grpc::InsecureServerCredentials());
+  builder.RegisterService(this);
+  server_ = std::unique_ptr<grpc::Server>(builder.BuildAndStart());
 }
 
 }  // namespace parrotdb

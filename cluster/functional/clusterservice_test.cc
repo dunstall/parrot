@@ -5,6 +5,7 @@
 
 #include "cluster/clusterservice.h"
 #include "cluster/grpcnode.h"
+#include "cluster/nodeerror.h"
 #include "gtest/gtest.h"
 #include "store/mock/store_mock.h"
 
@@ -25,7 +26,6 @@ TEST_F(TestClusterService, NodePutRecord) {
   service.Start();
 
   GrpcNode node{kAddr};
-
   node.Put(key, val);
 }
 
@@ -38,14 +38,26 @@ TEST_F(TestClusterService, NodeDeleteRecord) {
   service.Start();
 
   GrpcNode node{kAddr};
-
   node.Delete(key);
+}
+
+TEST_F(TestClusterService, NodePutUnreachable) {
+  const std::vector<uint8_t> key{1, 2, 3};
+  const std::vector<uint8_t> val{4, 5, 6};
+  GrpcNode node{kAddr};
+  EXPECT_THROW(node.Put(key, val), NodeError);
+}
+
+TEST_F(TestClusterService, NodeDeleteUnreachable) {
+  const std::vector<uint8_t> key{1, 2, 3};
+  GrpcNode node{kAddr};
+  EXPECT_THROW(node.Delete(key), NodeError);
 }
 
 // TODO(AD)
 // - Put db error
 // - Delete db error
-// - Node unreachable
+// - Node reboots and reconnects
 // - ...
 
 }  // namespace parrotdb

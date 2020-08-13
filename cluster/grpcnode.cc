@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "api/cluster.grpc.pb.h"
+#include "cluster/nodeerror.h"
 
 namespace parrotdb {
 
@@ -28,10 +29,9 @@ void GrpcNode::Put(const std::vector<uint8_t>& key,
   grpc::ClientContext context;
 
   // TODO(AD) Async
-  // TODO(AD) Handle exceptions
-  grpc::Status status = stub_->Put(&context, request, &reply);
+  const grpc::Status status = stub_->Put(&context, request, &reply);
   if (!status.ok()) {
-    // TODO(AD) Handle
+    throw NodeError{status.error_message()};
   }
 }
 
@@ -43,10 +43,9 @@ void GrpcNode::Delete(const std::vector<uint8_t>& key) {
   grpc::ClientContext context;
 
   // TODO(AD) Async
-  // TODO(AD) Handle exceptions
   grpc::Status status = stub_->Delete(&context, request, &reply);
   if (!status.ok()) {
-    // TODO(AD) Handle
+    throw NodeError{status.error_message()};
   }
 }
 

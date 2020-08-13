@@ -39,6 +39,8 @@ class ClusterService final : public pb::Cluster::Service {
 
   void Run();
 
+  void CreateServer();
+
   std::shared_ptr<Store> store_;
 
   std::string addr_;

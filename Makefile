@@ -40,6 +40,7 @@ $(OBJ_DIR)/test/%.o: %.cc
 .PHONY: format
 format:
 	find . \( -name "*.cc" -o -name "*.h" \) -not -path "./third-party/*"  | xargs clang-format -i --style=Google
+	buildifier -r .
 
 .PHONY: analyze
 analyze:
