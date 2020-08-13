@@ -15,7 +15,7 @@ namespace parrotdb {
 
 class GrpcNode : public Node {
  public:
-  GrpcNode(const std::string& addr);
+  explicit GrpcNode(const std::string& addr);
 
   ~GrpcNode() override {}
 

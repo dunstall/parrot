@@ -2,10 +2,12 @@ cc_test(
     name = "cluster-test",
     srcs = glob(["*_test.cc"]),
     copts = [
+        "-Iinclude",
         "-Iexternal/gtest/include",
     ],
     deps = [
         "//cluster",
+        "//store/mock",
         "@com_github_grpc_grpc//:grpc++",
         "@gtest//:gtest_main",
     ],
