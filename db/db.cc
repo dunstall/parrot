@@ -20,13 +20,13 @@ std::optional<std::vector<uint8_t>> DB::Get(const std::vector<uint8_t>& key) {
 
 void DB::Put(const std::vector<uint8_t>& key,
              const std::vector<uint8_t>& value) {
-  cluster_->Put(key, value);
   store_->Put(key, value);
+  cluster_->Put(key, value);
 }
 
 void DB::Delete(const std::vector<uint8_t>& key) {
-  cluster_->Delete(key);
   store_->Delete(key);
+  cluster_->Delete(key);
 }
 
 }  // namespace parrotdb
