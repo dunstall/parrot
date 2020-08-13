@@ -27,6 +27,7 @@ cc_test(
         ":db",
         "//cluster",
         "//include",
+        "//store/mock",
         "@gtest//:gtest_main",
     ],
 )

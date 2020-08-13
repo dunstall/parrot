@@ -8,23 +8,13 @@
 #include "db/db.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "store/mock/store_mock.h"
 #include "store/store.h"
 
 namespace parrotdb {
 
 class MockCluster : public Cluster {
  public:
-  MOCK_METHOD(void, Put,
-              (const std::vector<uint8_t>& key,
-               const std::vector<uint8_t>& value),
-              (override));
-  MOCK_METHOD(void, Delete, (const std::vector<uint8_t>& key), (override));
-};
-
-class MockStore : public Store {
- public:
-  MOCK_METHOD(std::optional<std::vector<uint8_t>>, Get,
-              (const std::vector<uint8_t>& key), (override));
   MOCK_METHOD(void, Put,
               (const std::vector<uint8_t>& key,
                const std::vector<uint8_t>& value),
