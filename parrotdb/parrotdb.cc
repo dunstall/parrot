@@ -7,14 +7,16 @@
 #include <vector>
 
 #include "cluster/cluster.h"
+#include "cluster/clusterimpl.h"
+#include "cluster/node.h"
 #include "store/inmemorystore.h"
 
 namespace parrotdb {
 
 ParrotDB::ParrotDB() : db_{nullptr, nullptr} {
-  db_ = DB{nullptr, std::make_unique<InMemoryStore>()};
-
-  // TODO(AD) Start anti-entropy background (gossip?)
+  std::vector<std::shared_ptr<Node>> nodes{};
+  db_ = DB{std::make_unique<ClusterImpl>(std::move(nodes)),
+           std::make_unique<InMemoryStore>()};
 }
 
 std::optional<std::vector<uint8_t>> ParrotDB::Get(
