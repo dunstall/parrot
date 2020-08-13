@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -12,7 +13,8 @@ namespace parrotdb {
 
 class ClusterImpl : public Cluster {
  public:
-  ClusterImpl(const std::vector<std::string>& nodes);
+  explicit ClusterImpl(const std::vector<std::shared_ptr<Node>>& nodes);
+
   ~ClusterImpl() override {}
 
   void Put(const std::vector<uint8_t>& key,
@@ -21,7 +23,7 @@ class ClusterImpl : public Cluster {
   void Delete(const std::vector<uint8_t>& key) override;
 
  private:
-  std::vector<Node> nodes_;
+  std::vector<std::shared_ptr<Node>> nodes_;
 };
 
 }  // namespace parrotdb
