@@ -13,11 +13,12 @@
 
 namespace parrotdb {
 
+// ClusterService implements the gRPC cluster server.
 class ClusterService final : public pb::Cluster::Service {
  public:
   ClusterService(std::shared_ptr<Store> store, const std::string& addr);
 
-  ~ClusterService();
+  ~ClusterService() override;
 
   ClusterService(const ClusterService&) = delete;
   ClusterService& operator=(const ClusterService&) = delete;
