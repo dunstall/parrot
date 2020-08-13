@@ -2,29 +2,19 @@
 
 #pragma once
 
-#include <grpcpp/grpcpp.h>
-
 #include <string>
-
-#include "cluster/nodeconnection.h"
+#include <vector>
 
 namespace parrotdb {
 
 class Node {
  public:
-  explicit Node(const std::string& addr);
+  virtual ~Node() {}
 
-  // NodeConnection Connect();
+  virtual void Put(const std::vector<uint8_t>& key,
+                   const std::vector<uint8_t>& value) = 0;
 
-  void Put(const std::vector<uint8_t>& key,
-           const std::vector<uint8_t>& value);
-
-  void Delete(const std::vector<uint8_t>& key);
-
- private:
-  std::string addr_;
-
-  std::shared_ptr<grpc::Channel> channel_;
+  virtual void Delete(const std::vector<uint8_t>& key) = 0;
 };
 
 }  // namespace parrotdb
