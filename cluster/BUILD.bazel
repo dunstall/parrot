@@ -4,22 +4,12 @@ cc_library(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["*.h"]),
+    hdrs = glob(["*.h"]),  # TODO only expose cluster.h
     visibility = ["//visibility:public"],
     deps = [
+        "//api:cluster_cc_grpc",
         "//include",
-    ],
-)
-
-cc_test(
-    name = "cluster-test",
-    srcs = glob(["*_test.cc"]),
-    copts = [
-        "-Iexternal/gtest/include",
-    ],
-    deps = [
-        ":cluster",
-        "//include",
-        "@gtest//:gtest_main",
+        "//store",
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
