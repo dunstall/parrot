@@ -4,7 +4,7 @@ cc_library(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["*.h"]),  # TODO only expose cluster.h
+    hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
         "//include",

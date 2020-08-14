@@ -13,6 +13,7 @@
 
 namespace parrotdb {
 
+// TODO(AD) Async
 GrpcNode::GrpcNode(const std::string& addr) {
   channel_ = grpc::CreateChannel(addr, grpc::InsecureChannelCredentials());
   stub_ = pb::Cluster::NewStub(channel_);
@@ -26,8 +27,6 @@ void GrpcNode::Put(const std::vector<uint8_t>& key,
 
   pb::PutResponse reply;
   grpc::ClientContext context;
-
-  // TODO(AD) Async
   const grpc::Status status = stub_->Put(&context, request, &reply);
   if (!status.ok()) {
     throw NodeError{status.error_message()};
@@ -40,8 +39,6 @@ void GrpcNode::Delete(const std::vector<uint8_t>& key) {
 
   pb::DeleteResponse reply;
   grpc::ClientContext context;
-
-  // TODO(AD) Async
   grpc::Status status = stub_->Delete(&context, request, &reply);
   if (!status.ok()) {
     throw NodeError{status.error_message()};
