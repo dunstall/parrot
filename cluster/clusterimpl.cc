@@ -7,6 +7,8 @@
 #include <utility>
 #include <vector>
 
+#include "cluster/nodeerror.h"
+
 namespace parrotdb {
 
 ClusterImpl::ClusterImpl(const std::vector<std::shared_ptr<Node>>& nodes)
@@ -15,15 +17,21 @@ ClusterImpl::ClusterImpl(const std::vector<std::shared_ptr<Node>>& nodes)
 void ClusterImpl::Put(const std::vector<uint8_t>& key,
                       const std::vector<uint8_t>& value) {
   for (auto& node : nodes_) {
-    // TODO(AD) Handle errors
-    node->Put(key, value);
+    try {
+      node->Put(key, value);
+    } catch (const NodeError& e) {
+      // TODO(AD) Log
+    }
   }
 }
 
 void ClusterImpl::Delete(const std::vector<uint8_t>& key) {
   for (auto& node : nodes_) {
-    // TODO(AD) Handle errors
-    node->Delete(key);
+    try {
+      node->Delete(key);
+    } catch (const NodeError& e) {
+      // TODO(AD) Log
+    }
   }
 }
 
