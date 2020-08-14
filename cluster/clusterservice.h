@@ -8,7 +8,7 @@
 #include <string>
 #include <thread>
 
-#include "api/cluster.grpc.pb.h"
+#include "rpc/cluster.grpc.pb.h"
 #include "store/store.h"
 
 namespace parrotdb {

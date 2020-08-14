@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "api/cluster.grpc.pb.h"
 #include "cluster/nodeerror.h"
+#include "rpc/cluster.grpc.pb.h"
 
 namespace parrotdb {
 

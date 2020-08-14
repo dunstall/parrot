@@ -9,7 +9,7 @@
 #include <thread>
 #include <vector>
 
-#include "api/cluster.grpc.pb.h"
+#include "rpc/cluster.grpc.pb.h"
 #include "store/storeerror.h"
 
 namespace parrotdb {
