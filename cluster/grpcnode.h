@@ -19,6 +19,12 @@ class GrpcNode : public Node {
 
   ~GrpcNode() override {}
 
+  GrpcNode(const GrpcNode&) = delete;
+  GrpcNode& operator=(const GrpcNode&) = delete;
+
+  GrpcNode(GrpcNode&&) = default;
+  GrpcNode& operator=(GrpcNode&&) = default;
+
   void Put(const std::vector<uint8_t>& key,
            const std::vector<uint8_t>& value) override;
 

@@ -17,6 +17,12 @@ class ClusterImpl : public Cluster {
 
   ~ClusterImpl() override {}
 
+  ClusterImpl(const ClusterImpl&) = delete;
+  ClusterImpl& operator=(const ClusterImpl&) = delete;
+
+  ClusterImpl(ClusterImpl&&) = default;
+  ClusterImpl& operator=(ClusterImpl&&) = default;
+
   void Put(const std::vector<uint8_t>& key,
            const std::vector<uint8_t>& value) override;
 
