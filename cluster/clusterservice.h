@@ -40,7 +40,7 @@ class ClusterService final : public pb::Cluster::Service {
 
   void Run();
 
-  void CreateServer();
+  void BuildServer();
 
   std::shared_ptr<Store> store_;
 

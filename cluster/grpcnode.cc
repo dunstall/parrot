@@ -14,7 +14,6 @@
 namespace parrotdb {
 
 GrpcNode::GrpcNode(const std::string& addr) {
-  // TODO(AD) Handle exceptions
   channel_ = grpc::CreateChannel(addr, grpc::InsecureChannelCredentials());
   stub_ = pb::Cluster::NewStub(channel_);
 }

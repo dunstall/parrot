@@ -21,12 +21,11 @@ ClusterService::ClusterService(std::shared_ptr<Store> store,
 ClusterService::~ClusterService() { Stop(); }
 
 void ClusterService::Start() {
-  CreateServer();
+  BuildServer();
   thread_ = std::thread(&ClusterService::Run, this);
 }
 
 void ClusterService::Stop() {
-  // TODO(AD) Need to recreate server obj?
   server_->Shutdown();
   if (thread_.joinable()) {
     thread_.join();
@@ -61,7 +60,7 @@ grpc::Status ClusterService::Delete(grpc::ServerContext* context,
   return grpc::Status::OK;
 }
 
-void ClusterService::CreateServer() {
+void ClusterService::BuildServer() {
   grpc::ServerBuilder builder;
   builder.AddListeningPort(addr_, grpc::InsecureServerCredentials());
   builder.RegisterService(this);

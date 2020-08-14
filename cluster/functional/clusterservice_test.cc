@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "cluster/clusterservice.h"
 #include "cluster/grpcnode.h"
@@ -17,7 +18,7 @@ class TestClusterService : public ::testing::Test {
   const std::string kAddr = "localhost:3110";
 };
 
-TEST_F(TestClusterService, NodePutRecord) {
+TEST_F(TestClusterService, PutOk) {
   const std::vector<uint8_t> key{1, 2, 3};
   const std::vector<uint8_t> val{4, 5, 6};
   std::shared_ptr<MockStore> store = std::make_shared<MockStore>();
@@ -30,7 +31,7 @@ TEST_F(TestClusterService, NodePutRecord) {
   node.Put(key, val);
 }
 
-TEST_F(TestClusterService, NodeDeleteRecord) {
+TEST_F(TestClusterService, DeleteOk) {
   const std::vector<uint8_t> key{1, 2, 3};
   std::shared_ptr<MockStore> store = std::make_shared<MockStore>();
   EXPECT_CALL(*store, Delete(key)).Times(1);
@@ -42,14 +43,14 @@ TEST_F(TestClusterService, NodeDeleteRecord) {
   node.Delete(key);
 }
 
-TEST_F(TestClusterService, NodePutUnreachable) {
+TEST_F(TestClusterService, PutNodeUnreachable) {
   const std::vector<uint8_t> key{1, 2, 3};
   const std::vector<uint8_t> val{4, 5, 6};
   GrpcNode node{kAddr};
   EXPECT_THROW(node.Put(key, val), NodeError);
 }
 
-TEST_F(TestClusterService, NodeDeleteUnreachable) {
+TEST_F(TestClusterService, DeleteNodeUnreachable) {
   const std::vector<uint8_t> key{1, 2, 3};
   GrpcNode node{kAddr};
   EXPECT_THROW(node.Delete(key), NodeError);
@@ -82,8 +83,22 @@ TEST_F(TestClusterService, DeleteDatabaseError) {
   EXPECT_THROW(node.Delete(key), NodeError);
 }
 
-// TODO(AD)
-// - Node reboots and reconnects
-// - ...
+TEST_F(TestClusterService, PutNodeReconnects) {
+  const std::vector<uint8_t> key{1, 2, 3};
+  const std::vector<uint8_t> val{4, 5, 6};
+  GrpcNode node{kAddr};
+  // Node unreachable.
+  EXPECT_THROW(node.Put(key, val), NodeError);
+
+  std::shared_ptr<MockStore> store = std::make_shared<MockStore>();
+  EXPECT_CALL(*store, Put(key, val)).Times(1);
+
+  ClusterService service{store, kAddr};
+  service.Start();
+
+  // Give grpc time to retry.
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+  node.Put(key, val);
+}
 
 }  // namespace parrotdb
