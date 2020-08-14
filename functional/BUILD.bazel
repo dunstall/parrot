@@ -1,5 +1,6 @@
-cc_test(
-    name = "cluster-test",
+# Note not cc_test as this is built then copied into the required environment.
+cc_binary(
+    name = "functional-test",
     srcs = glob(["*_test.cc"]),
     copts = [
         "-Iinclude",
