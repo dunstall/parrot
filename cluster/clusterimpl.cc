@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "cluster/nodeerror.h"
+#include "spdlog/spdlog.h"
 
 namespace parrotdb {
 
@@ -19,8 +20,10 @@ void ClusterImpl::Put(const std::vector<uint8_t>& key,
   for (auto& node : nodes_) {
     try {
       node->Put(key, value);
+      spdlog::debug("replicated PUT to node {}", node->addr());
     } catch (const NodeError& e) {
-      // TODO(AD) Log
+      spdlog::warn("failed to replicate PUT to node {}: {}", node->addr(),
+                   e.what());
     }
   }
 }
@@ -29,8 +32,10 @@ void ClusterImpl::Delete(const std::vector<uint8_t>& key) {
   for (auto& node : nodes_) {
     try {
       node->Delete(key);
+      spdlog::debug("replicated DELETE to node {}", node->addr());
     } catch (const NodeError& e) {
-      // TODO(AD) Log
+      spdlog::warn("failed to replicate DELETE to node {}: {}", node->addr(),
+                   e.what());
     }
   }
 }

@@ -14,7 +14,7 @@
 namespace parrotdb {
 
 // TODO(AD) Async
-GrpcNode::GrpcNode(const std::string& addr) {
+GrpcNode::GrpcNode(const std::string& addr) : Node{addr} {
   channel_ = grpc::CreateChannel(addr, grpc::InsecureChannelCredentials());
   stub_ = pb::Cluster::NewStub(channel_);
 }

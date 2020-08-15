@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "rpc/cluster.grpc.pb.h"
+#include "spdlog/spdlog.h"
 #include "store/storeerror.h"
 
 namespace parrotdb {
@@ -26,13 +27,17 @@ void ClusterService::Start() {
 }
 
 void ClusterService::Stop() {
+  spdlog::info("shutting down cluster service");
   server_->Shutdown();
   if (thread_.joinable()) {
     thread_.join();
   }
 }
 
-void ClusterService::Run() { server_->Wait(); }
+void ClusterService::Run() {
+  spdlog::info("running cluster service");
+  server_->Wait();
+}
 
 grpc::Status ClusterService::Put(grpc::ServerContext* context,
                                  const pb::PutRequest* request,
@@ -42,7 +47,10 @@ grpc::Status ClusterService::Put(grpc::ServerContext* context,
                                  request->value().end());
   try {
     store_->Put(key, val);
+    spdlog::debug("received PUT from {}", context->peer());
   } catch (const StoreError& e) {
+    spdlog::warn("failed to PUT store from node {}: {}", context->peer(),
+                 e.what());
     return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
   }
   return grpc::Status::OK;
@@ -54,7 +62,10 @@ grpc::Status ClusterService::Delete(grpc::ServerContext* context,
   const std::vector<uint8_t> key(request->key().begin(), request->key().end());
   try {
     store_->Delete(key);
+    spdlog::debug("received DELETE from {}", context->peer());
   } catch (const StoreError& e) {
+    spdlog::warn("failed to DELETE store from node {}: {}", context->peer(),
+                 e.what());
     return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
   }
   return grpc::Status::OK;

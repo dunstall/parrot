@@ -9,7 +9,8 @@ namespace parrotdb {
 
 class Node {
  public:
-  Node() = default;
+  Node(const std::string& addr);
+
   virtual ~Node() {}
 
   Node(const Node&) = delete;
@@ -18,10 +19,15 @@ class Node {
   Node(Node&&) = default;
   Node& operator=(Node&&) = default;
 
+  std::string addr() const { return addr_; }
+
   virtual void Put(const std::vector<uint8_t>& key,
                    const std::vector<uint8_t>& value) = 0;
 
   virtual void Delete(const std::vector<uint8_t>& key) = 0;
+
+ private:
+  std::string addr_;
 };
 
 }  // namespace parrotdb
