@@ -5,6 +5,4 @@ format:
 
 .PHONY: analyze
 analyze:
-	# Requires cpplint (pip3 install cpplint)
-	# TODO(AD) use clang-tidy
 	cpplint --recursive --exclude=third-party/ --filter=-build/c++11,-whitespace/parens,-whitespace/line_length,-whitespace/braces .
