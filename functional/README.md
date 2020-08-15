@@ -1,4 +1,6 @@
 # System Integration & Performance Testing
+Currently this only includes a cluster of ParrotDB nodes that send random bytes
+to each other.
 
 See
 * Etcd: https://github.com/etcd-io/etcd/tree/master/functional
