@@ -28,11 +28,17 @@ $ bazel test ...
 
 ## Example
 ```c++
+...
+
 #include "parrotdb/config.h"
 #include "parrotdb/parrotdb.h"
 
 int main() {
-  parrotdb::Config config{"0.0.0.0:3112", cluster, true};
+  const std::vector<std::string> cluster{
+    "192.168.40.122:3112",
+    "192.168.40.123:3112"
+  };
+  const parrotdb::Config config{"0.0.0.0:3112", cluster, true};
   parrotdb::ParrotDB db{config};
 
   const std::vector<uint8_t> key{1, 2, 3};
