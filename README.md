@@ -27,8 +27,13 @@ $ bazel test ...
 * RocksDB data storage engine
 
 ## Example
+The public interface is in include/. Callers should not include or rely on the
+details of any other header files in this package. Those internal APIs may be
+changed without warning.
+
 ```c++
-...
+#include <string>
+#include <vector>
 
 #include "parrotdb/config.h"
 #include "parrotdb/parrotdb.h"
