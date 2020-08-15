@@ -11,5 +11,6 @@ cc_library(
         "//rpc:cluster_cc_grpc",
         "//store",
         "@com_github_grpc_grpc//:grpc++",
+        "@spdlog",
     ],
 )

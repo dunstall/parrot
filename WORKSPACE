@@ -2,23 +2,7 @@ workspace(name = "parrotdb")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# Gflags.
-
-http_archive(
-    name = "com_github_gflags_gflags",
-    sha256 = "19713a36c9f32b33df59d1c79b4958434cb005b5b47dc5400a7a4b078111d9b5",
-    strip_prefix = "gflags-2.2.2",
-    url = "https://github.com/gflags/gflags/archive/v2.2.2.zip",
-)
-
-# Glog.
-
-http_archive(
-    name = "glog",
-    sha256 = "9e1b54eb2782f53cd8af107ecf08d2ab64b8d0dc2b7f5594472f3bd63ca85cdc",
-    strip_prefix = "glog-0.4.0",
-    url = "https://github.com/google/glog/archive/v0.4.0.zip",
-)
+# Google Test.
 
 http_archive(
     name = "gtest",
@@ -49,4 +33,14 @@ grpc_extra_deps()
 # TODO(AD) Add clang-tidy and cpplint to bazel
 # TODO(AD) Do bazel properly
 
-# TODO(AD) spdlog
+# spdlog
+
+http_archive(
+    name = "spdlog",
+    build_file = "BUILD.spdlog",
+    sha256 = "f0114a4d3c88be9e696762f37a7c379619443ce9d668546c61b21d41affe5b62",
+    strip_prefix = "spdlog-1.7.0",
+    urls = [
+        "https://github.com/gabime/spdlog/archive/v1.7.0.tar.gz",
+    ],
+)
