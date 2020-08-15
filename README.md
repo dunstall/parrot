@@ -13,3 +13,11 @@ Possible techniques:
 * Conflict resolution (LWW or Vector Clocks) - make configurable
 
 Provide a C++ library not an API.
+
+## v1
+* Basic async replication
+* Functional testing
+
+## Next
+* Work though each class for make sure well factored, tested and logged
+* Full functional testing
