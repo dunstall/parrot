@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "parrotdb/config.h"
 #include "parrotdb/parrotdb.h"
 
 int main(int argc, char** argv) {
@@ -11,7 +12,8 @@ int main(int argc, char** argv) {
     cluster.push_back(argv[i]);
   }
 
-  parrotdb::ParrotDB db{"0.0.0.0:3112", cluster, true};
+  parrotdb::Config config{"0.0.0.0:3112", cluster, true};
+  parrotdb::ParrotDB db{config};
   while (true) {
     const std::vector<uint8_t> key{1, 2, 3};
     const std::vector<uint8_t> val{4, 5, 6};

@@ -14,7 +14,7 @@ Possible techniques:
 
 Provide a C++ library not an API.
 
-## v1
+## v0.1.0
 * Basic async replication
 * Functional testing
 

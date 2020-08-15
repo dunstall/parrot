@@ -6,5 +6,6 @@ if ! [[ "${0}" =~ "run.sh" ]]; then
 fi
 
 bazel build //functional:functional-test
+rm -f ../functional-test.out
 cp ../bazel-bin/functional/functional-test ../functional-test.out
 docker-compose up --build

@@ -8,16 +8,17 @@
 #include <string>
 #include <vector>
 
+#include "cluster/cluster.h"
 #include "cluster/clusterservice.h"
 #include "db/db.h"
+#include "parrotdb/config.h"
 #include "store/store.h"
 
 namespace parrotdb {
 
 class ParrotDB {
  public:
-  ParrotDB(const std::string& addr, const std::vector<std::string>& cluster,
-           bool verbose = false);
+  ParrotDB(const Config& conf);
 
   ~ParrotDB() {}
 
@@ -35,7 +36,12 @@ class ParrotDB {
   void Delete(const std::vector<uint8_t>& key);
 
  private:
+  void ConfigureLogging(bool verbose) const;
+
+  std::unique_ptr<Cluster> CreateCluster(const Config& conf) const;
+
   DB db_;
+
   std::unique_ptr<ClusterService> service_;
 };
 

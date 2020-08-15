@@ -9,25 +9,22 @@
 #include "cluster/clusterimpl.h"
 #include "cluster/grpcnode.h"
 #include "cluster/node.h"
+#include "parrotdb/config.h"
 #include "spdlog/spdlog.h"
 #include "store/inmemorystore.h"
 
 namespace parrotdb {
 
-ParrotDB::ParrotDB(const std::string& addr,
-                   const std::vector<std::string>& cluster, bool verbose)
-    : db_{nullptr, nullptr} {
-  if (verbose) {
-    spdlog::set_level(spdlog::level::debug);
-    spdlog::debug("ParrotDB verbose logging");
-  }
-  std::vector<std::shared_ptr<Node>> nodes{};
-  for (const std::string& a : cluster) {
-    nodes.push_back(std::make_shared<GrpcNode>(a));
-  }
+// This is a thin wrapper around DB to construct the production database and
+// cluster - so DB can be better tested with dependency injection.
+
+ParrotDB::ParrotDB(const Config& conf) : db_{nullptr, nullptr} {
+  ConfigureLogging(conf.verbose);
+
   std::shared_ptr<Store> store = std::make_shared<InMemoryStore>();
-  db_ = DB{std::make_unique<ClusterImpl>(std::move(nodes)), store};
-  service_ = std::make_unique<ClusterService>(store, addr);
+  db_ = DB{CreateCluster(conf), store};
+
+  service_ = std::make_unique<ClusterService>(store, conf.addr);
   service_->Start();
 }
 
@@ -42,5 +39,22 @@ void ParrotDB::Put(const std::vector<uint8_t>& key,
 }
 
 void ParrotDB::Delete(const std::vector<uint8_t>& key) { return Delete(key); }
+
+void ParrotDB::ConfigureLogging(bool verbose) const {
+  spdlog::info("running ParrotDB");
+  if (verbose) {
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::debug("verbose logging enabled");
+  }
+}
+
+std::unique_ptr<Cluster> ParrotDB::CreateCluster(const Config& conf) const {
+  std::vector<std::shared_ptr<Node>> nodes{};
+  for (const std::string& a : conf.cluster) {
+    spdlog::info("adding node: {}", a);
+    nodes.push_back(std::make_shared<GrpcNode>(a));
+  }
+  return std::make_unique<ClusterImpl>(std::move(nodes));
+}
 
 }  // namespace parrotdb
