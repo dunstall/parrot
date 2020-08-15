@@ -54,6 +54,6 @@ int main() {
 
   db.Delete(key);
 
-  assert(*db.Get(key) == std::nullopt);
+  assert(db.Get(key) == std::nullopt);
 }
 ```
