@@ -4,11 +4,11 @@ cc_library(
         ["*.cc"],
         exclude = ["*_test.cc"],
     ),
-    hdrs = glob(["*.h"]),  # TODO(AD) Hide interfaces
+    hdrs = glob(["*.h"]),
     copts = [
         "-Iinclude",
     ],
-    visibility = ["//visibility:public"],
+    visibility = ["//parrotdb:__pkg__"],
     deps = [
         "//cluster",
         "//include",

@@ -5,7 +5,11 @@ cc_library(
         exclude = ["*_test.cc"],
     ),
     hdrs = glob(["*.h"]),
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//cluster/functional:__pkg__",
+        "//db:__pkg__",
+        "//parrotdb:__pkg__",
+    ],
     deps = [
         "//include",
         "//rpc:cluster_cc_grpc",

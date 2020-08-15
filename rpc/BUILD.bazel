@@ -1,7 +1,5 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
-package(default_visibility = ["//visibility:public"])
-
 ##############################################################################
 # Common
 ##############################################################################
@@ -27,5 +25,6 @@ cc_grpc_library(
     name = "cluster_cc_grpc",
     srcs = [":cluster_proto"],
     grpc_only = True,
+    visibility = ["//cluster:__pkg__"],
     deps = [":cluster_cc_proto"],
 )

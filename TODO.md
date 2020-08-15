@@ -1,7 +1,4 @@
 # Release 0.2.0 - Tidy up
-* Update bazel:
-  * install all dependencies though bazel eg spdlog
-  * update visibility
 * Add gRPC async and deep dive into gRPC (ServerContext, retries, ...)
 * Add ParrotDB docs on public API
 * spdlog update and deep dive into features and how to log properly
