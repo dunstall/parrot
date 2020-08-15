@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
     cluster.push_back(argv[i]);
   }
 
-  parrotdb::ParrotDB db{"0.0.0.0:3112", cluster};
+  parrotdb::ParrotDB db{"0.0.0.0:3112", cluster, true};
   while (true) {
     const std::vector<uint8_t> key{1, 2, 3};
     const std::vector<uint8_t> val{4, 5, 6};

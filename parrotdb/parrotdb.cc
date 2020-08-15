@@ -2,7 +2,6 @@
 
 #include "parrotdb/parrotdb.h"
 
-#include <memory>
 #include <optional>
 #include <vector>
 
@@ -10,13 +9,18 @@
 #include "cluster/clusterimpl.h"
 #include "cluster/grpcnode.h"
 #include "cluster/node.h"
+#include "spdlog/spdlog.h"
 #include "store/inmemorystore.h"
 
 namespace parrotdb {
 
 ParrotDB::ParrotDB(const std::string& addr,
-                   const std::vector<std::string>& cluster)
+                   const std::vector<std::string>& cluster, bool verbose)
     : db_{nullptr, nullptr} {
+  if (verbose) {
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::debug("ParrotDB verbose logging");
+  }
   std::vector<std::shared_ptr<Node>> nodes{};
   for (const std::string& a : cluster) {
     nodes.push_back(std::make_shared<GrpcNode>(a));

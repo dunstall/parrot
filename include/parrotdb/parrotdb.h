@@ -16,7 +16,8 @@ namespace parrotdb {
 
 class ParrotDB {
  public:
-  ParrotDB(const std::string& addr, const std::vector<std::string>& cluster);
+  ParrotDB(const std::string& addr, const std::vector<std::string>& cluster,
+           bool verbose = false);
 
   ~ParrotDB() {}
 

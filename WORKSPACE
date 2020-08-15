@@ -48,3 +48,5 @@ grpc_extra_deps()
 
 # TODO(AD) Add clang-tidy and cpplint to bazel
 # TODO(AD) Do bazel properly
+
+# TODO(AD) spdlog

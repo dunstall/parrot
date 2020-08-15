@@ -6,10 +6,5 @@ if ! [[ "${0}" =~ "run.sh" ]]; then
 fi
 
 bazel build //functional:functional-test
-cp ../bazel-bin/functional/functional-test ../functional-test
+cp ../bazel-bin/functional/functional-test ../functional-test.out
 docker-compose up --build
-# docker build . -f functional/Dockerfile -t parrotdb-functional
-rm -f ../functional-test
-
-# docker network create parrotdb
-# docker run --rm -it --network parrotdb parrotdb-functional
