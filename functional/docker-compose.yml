@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  node.1.parrotdb:
+    build:
+      dockerfile: functional/Dockerfile
+      context: ..
+      args:
+        cluster: node.2.parrotdb:3112 node.3.parrotdb:3112
+    networks:
+      parrotdb-net:
+        aliases:
+         - node.1.parrotdb
+
+  node.2.parrotdb:
+    build:
+      dockerfile: functional/Dockerfile
+      context: ..
+      args:
+        cluster: node.1.parrotdb:3112 node.3.parrotdb:3112
+    networks:
+      parrotdb-net:
+        aliases:
+         - node.2.parrotdb
+
+  node.3.parrotdb:
+    build:
+      dockerfile: functional/Dockerfile
+      context: ..
+      args:
+        cluster: node.1.parrotdb:3112 node.2.parrotdb:3112
+    networks:
+      parrotdb-net:
+        aliases:
+         - node.3.parrotdb
+
+networks:
+  parrotdb-net:
+    driver: bridge

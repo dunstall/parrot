@@ -1,13 +1,11 @@
 # Note not cc_test as this is built then copied into the required environment.
 cc_binary(
     name = "functional-test",
-    srcs = glob(["*_test.cc"]),
+    srcs = glob(["*.cc"]),
     copts = [
         "-Iinclude",
-        "-Iexternal/gtest/include",
     ],
     deps = [
         "//parrotdb",
-        "@gtest//:gtest_main",
     ],
 )

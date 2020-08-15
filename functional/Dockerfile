@@ -1,4 +1,8 @@
 FROM ubuntu
 
+ARG cluster
+
 COPY functional-test functional-test
-CMD ./functional-test
+RUN echo $cluster
+ENV cluster $cluster
+CMD ./functional-test $cluster
