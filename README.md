@@ -1,23 +1,48 @@
 # ParrotDB
-Eventually consistent replication layer above RocksDB.
+C++ database API with asynchronous replication.
 
-Possible techniques:
-* Replicated writes
+## Install
+**Bazel**
+```
+$ bazel build //parrotdb
+```
+Also run unit tests with
+```
+$ bazel test ...
+```
+
+## Features
+* In memory storage engine
+* Asynchronous replication across the cluster (leaderless) using LWW
+
+### Future
 * Anti-entropy:
   * merkle trees
   * read repair
   * hinted handoff
   * bitmap version vector
-* Quorum
+* Quorum / sync writes
 * Witness replicas
-* Conflict resolution (LWW or Vector Clocks) - make configurable
+* Conflict resolution with vector clocks
+* RocksDB data storage engine
 
-Provide a C++ library not an API.
+## Example
+```c++
+#include "parrotdb/config.h"
+#include "parrotdb/parrotdb.h"
 
-## v0.1.0
-* Basic async replication
-* Functional testing
+int main() {
+  parrotdb::Config config{"0.0.0.0:3112", cluster, true};
+  parrotdb::ParrotDB db{config};
 
-## Next
-* Work though each class for make sure well factored, tested and logged
-* Full functional testing
+  const std::vector<uint8_t> key{1, 2, 3};
+  const std::vector<uint8_t> val{4, 5, 6};
+  db.Put(key, val);
+
+  assert(*db.Get(key) == val);
+
+  db.Delete(key);
+
+  assert(*db.Get(key) == std::nullopt);
+}
+```
