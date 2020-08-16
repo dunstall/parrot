@@ -10,9 +10,8 @@ readability-*,
 '
 
 WarningsAsErrors: ''
-HeaderFilterRegex: '*spdlog/[^f].*'
 AnalyzeTemporaryDtors: false
-FormatStyle:     none
+FormatStyle:     google
 
 CheckOptions:    
   - key:             google-readability-braces-around-statements.ShortStatementLines

@@ -1,6 +1,5 @@
 # Release 0.2.0 - Tidy up
-* Clang-tidy (format done)
-  * https://github.com/gabime/spdlog/blob/v1.7.0/.clang-tidy
+* Fix all static analysis warnings
 * Add gRPC async and deep dive into gRPC (ServerContext, retries, ...)
 * Add ParrotDB docs on public API
 * spdlog update and deep dive into features and how to log properly
