@@ -3,10 +3,11 @@
 #include "store/storeerror.h"
 
 #include <string>
+#include <utility>
 
 namespace parrotdb {
 
-StoreError::StoreError(const std::string& msg) : msg_{msg} {}
+StoreError::StoreError(std::string msg) : msg_{std::move(msg)} {}
 
 const char* StoreError::what() const noexcept { return msg_.c_str(); }
 

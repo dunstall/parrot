@@ -14,16 +14,16 @@ namespace parrotdb {
 
 class InMemoryStore : public Store {
  public:
-  InMemoryStore() {}
+  InMemoryStore() = default;
 
-  ~InMemoryStore() override {}
+  ~InMemoryStore() override = default;
 
   // Not copy-assignable as owns a mutex.
   InMemoryStore(const InMemoryStore&) = delete;
   InMemoryStore& operator=(const InMemoryStore&) = delete;
 
-  InMemoryStore(InMemoryStore&&) = default;
-  InMemoryStore& operator=(InMemoryStore&&) = default;
+  InMemoryStore(InMemoryStore&&) = delete;
+  InMemoryStore& operator=(InMemoryStore&&) = delete;
 
   std::optional<std::vector<uint8_t>> Get(
       const std::vector<uint8_t>& key) override;

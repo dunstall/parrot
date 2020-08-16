@@ -18,9 +18,9 @@ namespace parrotdb {
 
 class ParrotDB {
  public:
-  ParrotDB(const Config& conf);
+  explicit ParrotDB(const Config& conf);
 
-  ~ParrotDB() {}
+  ~ParrotDB() = default;
 
   // Not copy-assignable.
   ParrotDB(const ParrotDB&) = delete;

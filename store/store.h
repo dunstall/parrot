@@ -11,7 +11,15 @@ namespace parrotdb {
 // Facade for the underlying database storage engine.
 class Store {
  public:
-  virtual ~Store() {}
+  Store() = default;
+
+  virtual ~Store() = default;
+
+  Store(const Store&) = delete;
+  Store& operator=(const Store&) = delete;
+
+  Store(Store&&) = delete;
+  Store& operator=(Store&&) = delete;
 
   virtual std::optional<std::vector<uint8_t>> Get(
       const std::vector<uint8_t>& key) = 0;

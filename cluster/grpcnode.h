@@ -17,7 +17,7 @@ class GrpcNode : public Node {
  public:
   explicit GrpcNode(const std::string& addr);
 
-  ~GrpcNode() override {}
+  ~GrpcNode() override = default;
 
   GrpcNode(const GrpcNode&) = delete;
   GrpcNode& operator=(const GrpcNode&) = delete;

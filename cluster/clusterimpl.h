@@ -13,9 +13,9 @@ namespace parrotdb {
 
 class ClusterImpl : public Cluster {
  public:
-  explicit ClusterImpl(const std::vector<std::shared_ptr<Node>>& nodes);
+  explicit ClusterImpl(std::vector<std::shared_ptr<Node>> nodes);
 
-  ~ClusterImpl() override {}
+  ~ClusterImpl() override = default;
 
   ClusterImpl(const ClusterImpl&) = delete;
   ClusterImpl& operator=(const ClusterImpl&) = delete;

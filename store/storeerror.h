@@ -9,7 +9,7 @@ namespace parrotdb {
 
 class StoreError : public std::exception {
  public:
-  explicit StoreError(const std::string& msg);
+  explicit StoreError(std::string msg);
 
   const char* what() const noexcept override;
 

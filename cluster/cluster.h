@@ -11,7 +11,7 @@ class Cluster {
  public:
   Cluster() = default;
 
-  virtual ~Cluster() {}
+  virtual ~Cluster() = default;
 
   Cluster(const Cluster&) = delete;
   Cluster& operator=(const Cluster&) = delete;

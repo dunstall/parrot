@@ -9,9 +9,9 @@ namespace parrotdb {
 
 class Node {
  public:
-  Node(const std::string& addr);
+  explicit Node(std::string addr);
 
-  virtual ~Node() {}
+  virtual ~Node() = default;
 
   Node(const Node&) = delete;
   Node& operator=(const Node&) = delete;

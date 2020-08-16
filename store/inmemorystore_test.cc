@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "gtest/gtest.h"
+#include "gtest/gtest.h"  // NOLINT
 #include "store/inmemorystore.h"
 
 namespace parrotdb {

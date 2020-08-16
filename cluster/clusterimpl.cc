@@ -12,7 +12,7 @@
 
 namespace parrotdb {
 
-ClusterImpl::ClusterImpl(const std::vector<std::shared_ptr<Node>>& nodes)
+ClusterImpl::ClusterImpl(std::vector<std::shared_ptr<Node>> nodes)
     : nodes_{std::move(nodes)} {}
 
 void ClusterImpl::Put(const std::vector<uint8_t>& key,

@@ -1,6 +1,5 @@
 # Release 0.2.0 - Tidy up
-* Clang-format and clang-tidy
-  * https://github.com/gabime/spdlog/blob/v1.7.0/.clang-format
+* Clang-tidy (format done)
   * https://github.com/gabime/spdlog/blob/v1.7.0/.clang-tidy
 * Add gRPC async and deep dive into gRPC (ServerContext, retries, ...)
 * Add ParrotDB docs on public API
